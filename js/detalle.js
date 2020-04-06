@@ -14,7 +14,7 @@ function onError(error) {
     console.log('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
 }
 function miubicacion() {
-    alerta("Mi ubicaci\u00F3n: " + latitude + " " + longitude);
+    alerta("Geolocalizaci\u00F3n: " + latitude + " | " + longitude);
 }
 // onError Callback receives a PositionError object
 //
@@ -26,13 +26,131 @@ function quitarFoto(IDFoto, ctr){
 }
 
 
+function base64toBlob(base64Data, contentType) {
+    contentType = contentType || 'image/jpeg';
+    var sliceSize = 1024;
+    var byteCharacters = atob(base64Data);
+    var bytesLength = byteCharacters.length;
+    var slicesCount = Math.ceil(bytesLength / sliceSize);
+    var byteArrays = new Array(slicesCount);
+
+    for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+        var begin = sliceIndex * sliceSize;
+        var end = Math.min(begin + sliceSize, bytesLength);
+
+        var bytes = new Array(end - begin);
+        for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+            bytes[i] = byteCharacters[offset].charCodeAt(0);
+        }
+        byteArrays[sliceIndex] = new Uint8Array(bytes);
+    }
+    return new Blob(byteArrays, { type: contentType });
+}
+
+function b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+}
 
 function sendImage(src) {
+    src = (src == 'library') ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA;
+    navigator.camera.getPicture(success, fail, { 
+        quality: 70,
+        destinationType: navigator.camera.DestinationType.DATA_URL,
+        sourceType: src,
+        encodingType: navigator.camera.EncodingType.JPEG,
+        saveToPhotoAlbum: false
+    });
+}
+ 
+function success(imageData) {
+    //alert(imageData);
+    $.mobile.loading('show');
+    if (window.FormData !== undefined) {
+        var data = new FormData();
+        data.append("IDPedido", $("#IDPedido").val());
+        var blob = b64toBlob(imageData, 'image/jpeg');
+        data.append("file", blob);
+        //alert(data);
+        $.ajax({
+            type: "POST",
+            url: dominio_extranet + '/Public/Servicios/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val(),
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (result) {
+                resp = result.toString().split("|");
+                console.log(resp);
+                if (resp[0] == 0) {
+                    alerta(resp[1]);
+                    setFotosPedido($.QueryString["IDPedido"]);
+                }
+                else {
+                    //alerta("Error, no se pudo subir la foto");
+                    alerta(resp[1]);
+                    alerta(resp[2]);
+                }
+                    
+
+                $.mobile.loading('hide');
+                $('#fileFoto').val("");
+            },
+            error: function (xhr, status, p3, p4) {
+                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                if (xhr.responseText && xhr.responseText[0] == "{")
+                    err = JSON.parse(xhr.responseText).Message;
+
+                $('#file').val("");
+                console.log(xhr);
+                console.log(status);
+                alerta("Error, no se pudo subir la foto");
+                $.mobile.loading('hide');
+            }
+        });
+    } else {
+        alert("This app doesn't support file uploads!");
+        $.mobile.loading('show');
+    }
+    /*
+    var url = dominio_extranet + '/Public/Servicios/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val();
+    var params = { image: imageData };
+    // send the data
+    $.post(url, params, function (data) {
+        console.log(data)
+        alert(data);
+    });
+    */
+}
+function fail(message) {
+    //alert(message);
+}
+
+
+function sendImage1(src) {
 
     src = (src == 'library') ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA;
     navigator.camera.getPicture(success, fail, {quality: 45, sourceType: src});
 
-                             function success(imageData) {
+                             function success1(imageData) {
                              var url = dominio_extranet + '/TransportesMeridian/Util/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val();
                              var params = {image: imageData};
 
@@ -43,7 +161,7 @@ function sendImage(src) {
                              }
 }
 
-  function fail(message) { alert(message); }
+  function fail1(message) { alert(message); }
 
   
 //document.addEventListener("deviceready", onDeviceReady, false);
@@ -52,7 +170,7 @@ var watchID = null;
 $(document).ready(function(e) {
 	
 	
- $('#btnFoto').click(function (e) { e.preventDefault(); sendImage("camera"); });
+  $('#btnFoto').click(function (e) { e.preventDefault(); sendImage("camera"); });
     
  
  $('#fileFoto').on('change', function (e) {

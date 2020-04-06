@@ -9,7 +9,7 @@ function onError(error) {
     console.log('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
 }
 function miubicacion() {
-    alerta("Mi ubicaci\u00F3n: " + latitude + " " + longitude);
+    alerta("Geolocalizaci\u00F3n: " + latitude + " | " + longitude);
 }
 $(document).ready(function(e) {  
 	watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
@@ -21,7 +21,7 @@ $(document).ready(function(e) {
         }
     }); 
 	
-	setIncidencias_Tracking($.QueryString["empresa"],8);
+	//setIncidencias_Tracking($.QueryString["empresa"],8);
 	
 	
 	$("#actualizar").click(function(e) {

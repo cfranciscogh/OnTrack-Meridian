@@ -9,7 +9,7 @@ function onError(error) {
     console.log('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
 }
 function miubicacion() {
-    alerta("Mi ubicaci\u00F3n: " + latitude + " " + longitude);
+    alerta("Geolocalizaci\u00F3n: " + latitude + " | " + longitude);
 }
 $(document).ready(function(e) {  
 	watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
@@ -64,6 +64,7 @@ function getProgramaciones(){
 				$("#contentProgramaciones").find("h3").remove();
 				$("#contentProgramaciones #divTABS").fadeIn("fast");
 				var count = 0;
+				var strStyle = "";
 				for (var i = 0; i<resultado.length;i++){
 					var cssGrupo = "";
 					var orden = ""
@@ -81,36 +82,33 @@ function getProgramaciones(){
 						orden = resultado[i].NroOrdenCompra;
 						
 						
-					var css = "";
-					if (resultado[i].IDEstado == 3)
-						css = "verde";
-					if (resultado[i].IDEstado == 4)
-						css = "ambar";
-					if (resultado[i].IDEstado == 5) //NO
-						css = "rojo";
-					if (resultado[i].IDEstado == 6)
-						css = "azul";
-					
-					css = css + " " + cssGrupo;
-					var href = "";
+				 	var href = "";
 					if (  resultado[i].IDEstado == 2  || resultado[i].IDEstado == 3  || resultado[i].IDEstado == 4 )
 						href = 'href="detalle.html?IDPedido='+resultado[i].IDPedido+'&idChofer='+$.QueryString["idChofer"]+'&empresa='+$.QueryString["empresa"] +  paramGrupo + '"'; 
-						
+					
+					strStyle +="<style> #item" + resultado[i].IDPedido + ".ui-btn-icon-right:after{ background-color: " + resultado[i].Estado_Color + " !important;}</style>"
 					
 					if (!flagGrupo)
-					$("#listProgramacion").append('<li data-estado="'+resultado[i].IDEstado+'" data-grupo="'+resultado[i].GrupoCode+'"><a '+href+' class="'+css+'" data-ajax="false">' + orden + ' - ' + resultado[i].NombreCliente +'</a></li> ');
+					$("#listProgramacion").append('<li data-estado="'+resultado[i].IDEstado+'" data-grupo="'+resultado[i].GrupoCode+'"><a id="item'+resultado[i].IDPedido+'" '+href+' class="item '+cssGrupo+'" data-ajax="false" data-color="' + resultado[i].Estado_Color +'">' + orden + ' - ' + resultado[i].NombreCliente +'</a></li> ');
 					
 				}
-				$( "#listProgramacion" ).listview( "refresh" );
-				$( "#listProgramacionDAD" ).listview( "refresh" );
+				
+				$("#listProgramacion").listview("refresh");
+				$("body").append(strStyle);
+				
+				/*setTimeout(function(){ 
+					$("#listProgramacion li").each(function(a,b){
+						var color = $(b).find("a").data("color");
+						//alert(color);
+						$(b).find("a:after").remove();
+						$(b).find("a:after").css("background-color",color);
+					});					
+				}, 3000);
+				*/
 			}
 			else{
 				$("#contentProgramaciones").find("h3").remove();
-				//$("#contentProgramaciones #divTABS").fadeOut("fast", function(){
-					$("#contentProgramaciones").append("<h3>No se encontraron programaciónes para el dia de hoy</h3>").hide().fadeIn("fast");
-				//});
-				//$("#contentProgramaciones").find("h3").remove();
-				
+				$("#contentProgramaciones").append("<h3>No se encontraron programaciónes</h3>").hide().fadeIn("fast");
 			}
         },
 

@@ -10,7 +10,7 @@ function onError(error) {
     console.log('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
 }
 function miubicacion() {
-    alerta("Mi ubicaci\u00F3n: " + latitude + " " + longitude);
+    alerta("Geolocalizaci\u00F3n: " + latitude + " | " + longitude);
 }
 //var dominio = "http://localhost:34927/"; 
 $(document).ready(function(e) {
