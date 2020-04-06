@@ -144,26 +144,6 @@ function fail(message) {
     //alert(message);
 }
 
-
-function sendImage1(src) {
-
-    src = (src == 'library') ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA;
-    navigator.camera.getPicture(success, fail, {quality: 45, sourceType: src});
-
-                             function success1(imageData) {
-                             var url = dominio_extranet + '/TransportesMeridian/Util/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val();
-                             var params = {image: imageData};
-
-                             // send the data
-                             $.post(url, params, function(data) {
-                                     alert('sent');     
-                             });
-                             }
-}
-
-  function fail1(message) { alert(message); }
-
-  
 //document.addEventListener("deviceready", onDeviceReady, false);
 var watchID = null;
 
