@@ -1,0 +1,330 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<title>OnTrack Meridian</title>
+    
+<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" type="text/css" href="css/themes/default/jquery.mobile.theme-1.4.5.min.css">
+     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="css/jqm-datebox.min.css">  
+    <script type='text/javascript' src="js/jqm-datebox.core.min.js"></script>    
+    <!--<script type='text/javascript' src="js/jqm-datebox.mode.calbox.min.js"></script>   --> 
+    <script type='text/javascript' src="js/jqm-datebox.mode.datebox.min.js"></script>    
+    <!--<script type='text/javascript' src="js/jqm-datebox.mode.flipbox.min.js"></script>-->
+      <script type="text/javascript" src="js/jquery.mobile.datebox.i18n.es-ES.utf8.js"></script>
+    <script src="js/funciones.js"></script> 
+    <script src="js/detalle.js"></script>  
+    <style type="text/css">
+	.imgPanel{
+		width:95%;
+		border:solid 1px #ccc;
+		margin:auto;
+	}
+	
+	.imgPanel a{
+		background-color:#ccc;
+		display:block;
+		text-align:center;
+		padding:10px;
+		cursor:pointer;
+		color:#333 !important;
+	}
+	</style>   
+      <style type="text/css">
+	
+	.ui-li-static:hover{
+		background-color:#123456;
+		color:white;
+	}
+	.ui-input-search{
+		border:none;
+	}	
+	
+	.listview li{
+		background-color:white;
+		padding:0px;
+		
+    text-decoration: none;
+    color: inherit !important;
+
+	}
+	/*.listview li{
+		background-color:#989696 !important;
+		 border-color:#ddd !important;
+	}*/
+	
+	
+	.listview li table td{
+		padding:4px 8px;
+	}
+	
+	#panelOCs .ui-collapsible{
+		position:relative !important;
+	}
+	
+	.listview li table td.titulo{
+		background-color:#989696;
+		color:white;
+		padding:6px 8px;
+	}
+	.listview li a table td.titulo .ui-checkbox,
+	.listview li a table td.titulo  .ui-radio{
+		margin-top:5px !important;
+	}
+	
+	.checkSpan{
+		position:relative;
+		padding:20px;
+		width: 25px;position: absolute;top: 0px;right: 0px;height: 10px;
+	}
+	
+	.checkSpan .ui-checkbox{
+	}
+	
+	.ui-listview .ui-btn-icon-notext:after,
+	.ui-listview .ui-btn-icon-left:after, 
+	.ui-listview .ui-btn-icon-right:after{
+		top:14px;
+		background-color:rgba(0,0,0,0);
+		right:5px;
+	}
+	
+	.ui-input-text{
+		margin:0px !important;
+	}
+	
+	.btnFinalizar{
+		display:block;
+		width:90%;
+		margin:auto;
+		margin-top:10px;
+		padding:10px;
+		color:white !important;
+		border-radius:8px;
+		text-decoration:none;
+		text-align:center;
+		background-color:#F00;
+	}
+	.ui-collapsible-content{
+		padding:0px !important;
+	}
+	.listview {
+		margin:0px !important;
+	}
+	</style>
+</head>
+
+<body >
+
+
+<div data-role="page" class="fondo">
+
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<h1 id="tituloEmpresa" style="margin:0 5%;">Información de Tracking</h1>
+	</div><!-- /header -->
+
+	<div role="main" id="contentProgramaciones" class="ui-content">
+    
+    	<div data-role="tabs">
+        	<div data-role="navbar">
+            	<ul>
+                	<li class="ui-tabs-active ui-state-active"><a class="ui-btn-active" href="#one" data-theme="a" style="font-size:16px;">Detalle</a></li>
+                    <li><a href="#two" data-theme="a" style="font-size:16px;">Tracking</a></li>
+                    <li><a href="#trhee" data-theme="a" style="font-size:16px;">Fotos</a></li>
+               </ul>
+            </div>
+           	
+            <div id="one" class="ui-content ui-body ui-body-a">
+            	<h3 class="titulo oc"></h3>
+                 <p>
+                <b>Cliente:</b> <span class="cliente">-</span><br>
+                <b>DNI:</b> <span class="dni">-</span><br>
+                <b>BLT:</b> <span class="blt">-</span><br>
+                </p>
+                <hr>
+                 <p>
+                <b>Fecha de Entrega:</b> <span class="fch_entrega">-</span><br>
+				<!--Departamento: LIMA<br>-->
+				<b>Provincia:</b> <span class="provincia">-</span><br>
+                <b>Distrito:</b> <span class="distrito">-</span><br>
+                <b>Direcci&oacute;n:</b> <span class="direccion">-</span><br>
+                <b>Referencia:</b> <span class="referencia">-</span><br>
+                <b>Telefono:</b> <span class="telefono">-</span><br>
+                <b>E-mail:</b> <span class="mail">-</span><br>
+                <b>Observacion:</b> <span class="observacion">-</span><br>
+                </p>
+                 <hr>
+                 <h3 >Detalle</h3>
+              	<div class="contentDetalle">
+              
+              	</div>
+                
+            </div>
+            
+            <div id="two" class="ui-content ui-body ui-body-a">
+            	<h3 class="titulo oc">-</h3>
+                
+            
+                <label for="hora">Tiempo Aprox. de llegada:</label>
+               
+                	<input type="text" readonly name="hora" id="hora" data-role="datebox" data-options='{"mode":"timebox", "useNewStyle":true, "overrideTimeFormat": 12}' />                
+                
+                	 <div class="contentAtencion" style="display:none;">
+                  <label for="hora">Inicio de Atenci&oacute;n:</label>
+				<input type="text" readonly name="hora_inicio" id="hora_inicio" data-role="datebox" data-options='{"mode":"timebox", "useNewStyle":true, "overrideTimeFormat": 12}' />    
+                 <label for="hora">Fin de Atenci&oacute;n:</label>   
+				<input type="text" readonly name="hora_fin" id="hora_fin" data-role="datebox" data-options='{"mode":"timebox", "useNewStyle":true, "overrideTimeFormat": 12}' />       
+                </div>    
+                    
+              
+                
+                
+                
+                <div id="DIVRecepcionado" style="display:none">
+                <label for="recepcionado">Recepcionado:</label>
+                <select onChange="valirRecepcion(this)" name="recepcionado" id="recepcionado" data-role="slider">
+                    <option value="0">NO</option>
+                    <option value="1">SI</option>
+                </select>
+                </div>
+                
+                <div class="contentDatos" style="display:none;">
+                <h4>Información de recepción:</h4>
+                
+                <label for="nombre">Nombre/Razón Social:</label>
+                <input type="text" name="nombre" id="nombre" value=""  />
+                
+                 <label for="dni">DNI/RUC:</label>
+                <input type="number" name="dni" id="dni" maxlength="8" size="8" value="" pattern="[0-9]*"/>
+                </div>
+               
+               
+               	<div id="DIVEstado" style="display:none">
+                <label for="estado">Estado:</label>
+                <select name="estado" onChange="HabilitarIncidencia(this)" id="estado" data-native-menu="false">
+                    <option selected value="1">Pendiente</option>
+                </select>
+                </div>
+                
+                  <a id="btnIncidencia" style="display:none;" href="#myPopup"  data-rel="popup" data-position-to="window" data-icon="plus" data-inline="true" data-corners="true" data-shadow="true"   data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-icon-left ui-icon-plus"> Regsitrar Incidencia </a>
+                
+                <div id="DIVIncidencia" style="display:none">
+                <label for="incidencia">Motivo:</label>
+                <select name="incidencia" id="incidencia" data-native-menu="false">
+                </select>
+                </div>
+                
+                <div id="panelParcial">
+                <label for="detalle">Detalle de Pedidos:</label>
+                	<div id="panelOCs" data-role="collapsible-set" data-theme="a" data-content-theme="a">        
+    				</div>
+                </div>
+                
+                <label for="observacion">Observaci&oacute;n:</label>
+<textarea rows="2" name="observacion" id="observacion"></textarea>
+                <input type="hidden" value="0" id="IDTranking" name="IDTranking" />
+                <input type="hidden" value="0" id="IDPedido" name="IDPedido" />
+                
+            </div>
+            
+              <div id="trhee" class="ui-content ui-body ui-body-a" style="min-height:230px;">
+              	 
+                <label for="hora">Seleccionar imagen:</label>
+               
+                	<input accept="image/*" type="file" name="fileFoto" id="fileFoto"  />   
+                       <a id="btnFoto"  data-position-to="window" data-icon="plus" data-inline="true" data-corners="true" data-shadow="true"   data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-icon-left ui-icon-plus"> Tomar Foto </a>
+                    <div class="panelFotos">
+                    
+                    </div>
+                 
+                     
+              </div>
+            
+            <div data-role="popup" id="myPopup"  data-overlay-theme="b">
+      	 	<div data-role="header">
+        <h1>Registrar incidencia</h1>
+    </div><!-- /header -->
+    <div data-role="content">
+        
+        <form>
+        
+         
+            <style>
+			.ui-controlgroup-controls .ui-radio{
+				width:25%;
+			}
+			.ui-controlgroup-controls .ui-radio .ui-btn{
+				padding:5px;
+			}
+			.ui-controlgroup-controls .ui-radio .ui-btn img{
+				max-width:100%;
+				display:block;
+			}
+			</style>
+             <fieldset data-role="controlgroup" data-type="horizontal">
+        <legend>Tipo de Inciencia:</legend>
+        
+        <input type="radio" name="tipoIncidencia" id="opcion1" value="10">
+        <label for="opcion1"><img src="img/icon1.jpg" title="Tr&aacute;fico" ></label>
+        <input type="radio" name="tipoIncidencia" id="opcion2" value="11">
+        <label for="opcion2"><img src="img/icon2.jpg" title="Falla Mecanica" ></label>
+        <input type="radio" name="tipoIncidencia" id="opcion3" value="12">
+        <label for="opcion3"><img src="img/icon3.jpg" title="Ruta Incorrecta" ></label>
+        <input type="radio" name="tipoIncidencia" id="opcion4" value="13">
+        <label for="opcion4"><img src="img/icon4.jpg" title="Accidente" ></label>
+    </fieldset>
+    
+    <div id="txtIncidencia" style="padding: 5px;text-align: center;font-weight: bold;background-color: #DFDDDD;border-radius: 10px; margin-bottom:5px;"></div>
+        	 
+             <label for="incidencia">Detalle:</label>
+             <textarea rows="2" name="detalle" id="detalle"></textarea>
+             
+        </form>
+        
+    </div><!-- /content -->
+    <div data-role="footer">
+        
+        
+        <div data-role="navbar" data-iconpos="top">
+		<ul>
+			<li><a id="registrarIncidencia" data-icon="plus">Confirmar</a></li>
+            
+           	 
+		</ul>
+	</div>
+        
+        
+    </div><!-- /footer -->
+           
+      		<a style="right: 4px; top: 4px;" href="#pageone" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+      
+      
+      
+      
+    </div>
+    
+    
+            
+        </div>
+         
+                
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<div data-role="navbar" data-iconpos="top">
+		<ul>
+			<li><a id="guardarTracking" data-icon="check">Guardar</a></li>
+			<li><a id="regresarPanel" data-ajax="false" href="panel.html?idChofer=-1" data-icon="back">Regresar</a></li>			 
+		</ul>
+	</div><!-- /navbar -->
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+
+</body>
+</html>

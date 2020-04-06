@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget id="com.grupotransmeridian.ontrack" version="4.2.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>OnTrack Meridian</name>
+    <description>
+       Tracking para despachos a nivel nacional
+    </description>
+    <author href="http://www.tmeridian.com.pe" email="fcamacho@meridian.com.pe">
+       IT Coorporativo
+    </author>
+    <content src="splash.html" />
+    <preference name="DisallowOverscroll" value="true" />
+	  <preference name="target-device" value="handset" />
+    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <access origin="*" />
+    <allow-navigation href="*://*.meridian.com.pe/*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="ios">
+		<icon height="40" platform="ios" src="Icon-App-40x40@2x.png" width="40" />
+		<icon height="76" platform="ios" src="Icon-App-76x76@2x.png" width="76" />
+		<icon height="120" platform="ios" src="Icon-App-120x120@2x.png" width="120" />
+		<icon height="152" platform="ios" src="Icon-App-152x152@2x.png" width="152" />
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+		<config-file target="*-Info.plist" parent="UIBackgroundModes">
+			<string></string>
+		</config-file>
+    </platform>
+    <icon src="icon.png" />
+     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
+    <!--<plugin name="cordova-plugin-googleplus" spec="^5.3.0">
+        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.46003667511-bafkr0afd42f5jlhb6n4oet430u42hde" />
+    </plugin>-->
+    <plugin name="cordova-plugin-geolocation" spec="^2.4.1" />
+    <plugin name="cordova-plugin-camera" spec="^2.4.1" /> 
+    <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
+    <plugin name="cordova-plugin-screen-orientation" spec="^3.0.1" />
+    <plugin name="cordova-plugin-appversion" spec="^1.0.0" />
+    <plugin name="cordova-plugin-device" spec="^2.0.2" />
+    <plugin name="cordova-plugin-networkinterface" spec="^2.0.0" />
+    <plugin name="cordova-plugin-sim" spec="^1.3.3" /> 
+    <engine name="android" spec="^6.4.0" />
+  <feature name="Camera">
+    <param name="android-package" value="org.apache.cordova.CameraLauncher" />
+  </feature>
+</widget>

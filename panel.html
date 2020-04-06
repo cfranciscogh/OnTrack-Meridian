@@ -1,0 +1,96 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<title>OnTrack Meridian</title>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" type="text/css" href="css/themes/default/jquery.mobile.theme-1.4.5.min.css">
+     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/funciones.js"></script>
+    <script src="js/panel.js"></script>
+    <style type="text/css">
+	ul li a.ui-btn img{
+		position:absolute;
+		top:5px !important;
+		left:5px !important;
+	}
+	.ui-listview>.ui-li-has-thumb>.ui-btn, .ui-listview>.ui-li-static.ui-li-has-thumb{
+		min-height:inherit !important;
+		padding-left:20px !important; 
+	}
+	
+	.verde.ui-btn-icon-left:after, .verde.ui-btn-icon-right:after, 
+	.verde.ui-btn-icon-top:after, .verde.ui-btn-icon-bottom:after, 
+	.verde.ui-btn-icon-notext:after{
+		background-color:#33c748 !important;
+		background-color:rgb(51, 199, 72) !important;
+	}
+	.ambar.ui-btn-icon-left:after, .ambar.ui-btn-icon-right:after, 
+	.ambar.ui-btn-icon-top:after, .ambar.ui-btn-icon-bottom:after, 
+	.ambar.ui-btn-icon-notext:after{
+		background-color:#fdbc40 !important;
+		background-color:rgb(253, 188, 64) !important;
+	}
+	.ambar.ui-btn-icon-left:after, .ambar.ui-btn-icon-right:after, 
+	.ambar.ui-btn-icon-top:after, .ambar.ui-btn-icon-bottom:after, 
+	.ambar.ui-btn-icon-notext:after{
+		background-color:#fdbc40 !important;
+		background-color:rgb(253, 188, 64) !important;
+	}
+	
+	.azul.ui-btn-icon-left:after, .azul.ui-btn-icon-right:after, 
+	.azul.ui-btn-icon-top:after, .azul.ui-btn-icon-bottom:after, 
+	.azul.ui-btn-icon-notext:after{
+		background-color:#044bb6 !important;
+		background-color:rgb(4, 75, 182) !important;
+	}
+	
+	.rojo.ui-btn-icon-left:after, .rojo.ui-btn-icon-right:after, 
+	.rojo.ui-btn-icon-top:after, .rojo.ui-btn-icon-bottom:after, 
+	.rojo.ui-btn-icon-notext:after{
+		background-color:#fc5753 !important;
+		background-color:rgb(252, 87, 83) !important;
+	}
+	
+	.ui-btn-right {
+		margin:0px;
+	}
+	</style>
+</head>
+
+<body >
+
+
+<div data-role="page" class="fondo">
+	<div data-role="header" data-position="fixed" data-theme="a"><a href="index.html" data-ajax="false" data-icon="back" class="ui-btn-right">Salir</a><h1 id="tituloEmpresa">Mis Despachos</h1></div><!-- /header -->
+
+	<div id="contentProgramaciones" role="main" class="ui-content" style="background-color:#fff;padding-top: 10px;">
+    <form class="ui-filterable"><input id="rich-autocomplete-input" data-type="search" placeholder="Buscar..."></form>
+        <ul id="listProgramacion" data-role="listview" data-filter="true" data-inset="true" data-input="#rich-autocomplete-input">
+        </ul>
+    
+     
+      
+        
+        
+	</div><!-- /content -->
+
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar" data-iconpos="top">
+		<ul>
+			<li><a id="actualizar" data-icon="refresh">Actualizar</a></li>
+			<li><a id="irPicking" href="#" data-ajax="false" data-icon="check">Ir a picking</a></li>	
+            <li class="itemAdmin"><a id="regresarEmpresa" href="#" data-ajax="false" data-icon="back">Cambiar de empresa</a></li>			
+            <!--<li class="itemUsuario"><a href="index.html" data-ajax="false"  data-icon="back">Salir</a></li>--> 
+            <li class="itemUsuario"><a id="irEmbarque" href="embarque.html" data-ajax="false"  data-icon="gear">Embarque</a></li>
+		</ul>
+	</div><!-- /navbar -->
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+
+</body>
+</html>

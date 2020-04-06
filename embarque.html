@@ -1,0 +1,101 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<title>OnTrack Meridian</title>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" type="text/css" href="css/themes/default/jquery.mobile.theme-1.4.5.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="css/login.css">-->
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+    
+        <link rel="stylesheet" type="text/css" href="css/jqm-datebox.min.css">  
+    <script type='text/javascript' src="js/jqm-datebox.core.min.js"></script>    
+    <!--<script type='text/javascript' src="js/jqm-datebox.mode.calbox.min.js"></script>   --> 
+    <script type='text/javascript' src="js/jqm-datebox.mode.datebox.min.js"></script>    
+    <!--<script type='text/javascript' src="js/jqm-datebox.mode.flipbox.min.js"></script>-->
+      <script type="text/javascript" src="js/jquery.mobile.datebox.i18n.es-ES.utf8.js"></script>
+      
+    <script src="js/funciones.js"></script>
+    <script src="js/embarque.js"></script>
+ 	<style type="text/css">
+	div.ui-slider-switch{
+		width:7em !important;
+	}
+	</style>
+</head>
+
+<body >
+
+
+<div data-role="page" class="fondo">
+
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<h1>Configuración</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+        
+        
+        
+				<div id="two" class="ui-content ui-body ui-body-a">
+            	
+                
+                            
+                
+                	 <div class="contentAtencion">
+                     <h3 class="titulo" style="margin:10px 0;"></h3>
+                     <table><tr><td>
+                     <label for="recepcionado">Estado:</label></td><td>
+                <select name="estado" id="estado" data-role="slider">
+                    <option value="1">Abierto</option>
+                    <option value="2">Cerrado</option>
+                </select></td></tr></table>
+                      <label for="hora">Fecha de ingreso del almacen:</label>
+				<input type="text" readonly name="fecha_inicio" id="fecha_inicio" data-role="datebox" data-options='{"mode":"datebox", "useNewStyle":true}' />   
+                  <label for="hora">Hora de ingreso del almacen:</label>
+				<input type="text" readonly name="hora_inicio" id="hora_inicio" data-role="datebox" data-options='{"mode":"timebox", "useNewStyle":true, "overrideTimeFormat": 12}' /> 
+                  <label for="hora">Fecha de salida del almacen:</label>   
+				<input type="text" readonly name="fecha_fin" id="fecha_fin" data-role="datebox" data-options='{"mode":"datebox", "useNewStyle":true}' />      
+               
+                   
+                 <label for="hora">Hora de salida del almacen:</label>   
+				<input type="text" readonly name="hora_fin" id="hora_fin" data-role="datebox" data-options='{"mode":"timebox", "useNewStyle":true, "overrideTimeFormat": 12}' />    
+                <input type="hidden" value="0" id="IDEmbarque" name="IDEmbarque" />
+                
+               
+               
+               
+                </div>    
+                    
+              
+                
+                
+                
+                
+                
+           
+                <input type="hidden" value="0" id="IDEmbarque" name="IDEmbarque" /> 
+                
+            </div>
+			 
+        
+        
+	</div><!-- /content -->
+
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar" data-iconpos="top">
+		<ul>
+			<li><a id="config"  data-icon="check">Guardar</a></li>
+			<li><a href="panel.html" id="irPanel" data-ajax="false"  data-icon="back">Regresar</a></li>
+			 
+		</ul>
+	</div><!-- /navbar -->
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+
+</body>
+</html>
