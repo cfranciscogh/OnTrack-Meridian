@@ -1,8 +1,20 @@
 // JavaScript Document
 var dominio = "http://www.meridian.com.pe/ServiciosWEB/"; 
+var  latitude = "";
+var longitude = "";
+function onSuccess(position) {
+   latitude = position.coords.latitude;
+   longitude = position.coords.longitude;
+}
+function onError(error) {
+    console.log('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+}
+function miubicacion() {
+    alerta("Mi ubicaci\u00F3n: " + latitude + " " + longitude);
+}
 //var dominio = "http://localhost:34927/"; 
 $(document).ready(function(e) {
-	
+	watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
 	$("#irPanel").attr("href","panel.html?idChofer=" + $.QueryString["idChofer"] +'&empresa='+ $.QueryString["empresa"] );
 	
 	$("#config").click(function(e) {

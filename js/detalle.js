@@ -1,27 +1,31 @@
 // JavaScript Document
-var  latitude = "";
-var longitude = "";
 var check = true;
 var dominio = "http://www.meridian.com.pe/ServiciosWEB/"; 
 var dominio_extranet = "http://www.meridian.com.pe/GT_Extranet/";
 //var dominio = "http://localhost:34927/";
+
+var  latitude = "";
+var longitude = "";
 function onSuccess(position) {
    latitude = position.coords.latitude;
    longitude = position.coords.longitude;
 }
-
+function onError(error) {
+    console.log('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+}
+function miubicacion() {
+    alerta("Mi ubicaci\u00F3n: " + latitude + " " + longitude);
+}
 // onError Callback receives a PositionError object
 //
-
+ 
 function quitarFoto(IDFoto, ctr){
 	if ( confirm('Desea quitar esta foto?')){
 		$(ctr).parent().parent().remove();
 	}
 }
 
-function onError(error) {
-    console.log('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
-}
+
 
 function sendImage(src) {
 
@@ -674,7 +678,7 @@ function setPedido(idPedido){
 			}
 			else{
 				//$("#contentProgramaciones").html("");
-//				$("#contentProgramaciones").html("<h3>No se encontraron programaci&oacute;nes para el dia de hoy</h3>");
+//				$("#contentProgramaciones").html("<h3>No se encontraron programaciónes para el dia de hoy</h3>");
 //				//Mensaje
 			}
         },
@@ -723,7 +727,7 @@ function setDetallePedido(idPedido){
 			}
 			else{
 				$("#contentProgramaciones").html("");
-				$("#contentProgramaciones").html("<h3>No se encontro informaci&oacute;n</h3>");
+				$("#contentProgramaciones").html("<h3>No se encontro información</h3>");
 //				//Mensaje
 			}
         },
@@ -786,7 +790,7 @@ function setDetallePedidoGrupo(grupo,chofer,entidad){
 			}
 			else{
 				$("#contentProgramaciones").html("");
-				$("#contentProgramaciones").html("<h3>No se encontro informaci&oacute;n</h3>");
+				$("#contentProgramaciones").html("<h3>No se encontro información</h3>");
 			}
         },
 
@@ -871,7 +875,7 @@ function setFotosPedido(idPedido){
 				$(".panelFotos").append(html);	
 			}
 			else
-				$(".panelFotos").html("<h3>No se encontro informaci&oacute;n</h3>");
+				$(".panelFotos").html("<h3>No se encontro información</h3>");
 			
         },
 

@@ -1,6 +1,18 @@
 // JavaScript Document
-// JavaScript Document
+var latitude = "";
+var longitude = "";
+function onSuccess(position) {
+   latitude = position.coords.latitude;
+   longitude = position.coords.longitude;
+}
+function onError(error) {
+    console.log('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+}
+function miubicacion() {
+    alerta("Mi ubicaci\u00F3n: " + latitude + " " + longitude);
+}
 $(document).ready(function(e) {  
+	watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
 	getProgramaciones();
 	
 	 $("form").keypress(function(e) {
@@ -258,7 +270,7 @@ function getProgramaciones(){
 			else{
 				
 				$("#contentProgramaciones").find("h3").remove();
-				$("#contentProgramaciones").append("<h3>No se encontraron programaci&oacute;nes para el dia de hoy</h3>").hide().fadeIn("fast");
+				$("#contentProgramaciones").append("<h3>No se encontraron programaciónes para el dia de hoy</h3>").hide().fadeIn("fast");
 				 
 				
 			}
