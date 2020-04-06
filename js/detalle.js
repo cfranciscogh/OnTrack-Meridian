@@ -83,7 +83,6 @@ function sendImage(src) {
 }
  
 function success(imageData) {
-    //alert(imageData);
     $.mobile.loading('show');
     if (window.FormData !== undefined) {
         var data = new FormData();
@@ -93,7 +92,8 @@ function success(imageData) {
         //alert(data);
         $.ajax({
             type: "POST",
-            url: dominio_extranet + '/Public/Servicios/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val(),
+            //url: dominio_extranet + '/Public/Servicios/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val(),
+			  url: dominio_extranet + 'TransportesMeridian/Util/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val(),
             contentType: false,
             processData: false,
             data: data,
