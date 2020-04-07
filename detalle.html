@@ -132,10 +132,131 @@
     	<div data-role="tabs">
         	<div data-role="navbar">
             	<ul>
-                	<li class="ui-tabs-active ui-state-active"><a class="ui-btn-active" href="#one" data-theme="a" style="font-size:16px;">Detalle</a></li>
-                    <li><a href="#two" data-theme="a" style="font-size:16px;">Tracking</a></li>
+               		<li class="ui-tabs-active ui-state-active">
+               			<a href="#two" class="ui-btn-active" data-theme="a" style="font-size:16px;">Tracking</a>
+               		</li>
+                	<li><a href="#one" data-theme="a" style="font-size:16px;">Detalle</a></li>
+                    
                     <li><a href="#trhee" data-theme="a" style="font-size:16px;">Fotos</a></li>
                </ul>
+            </div>
+            
+            <div id="two" class="ui-content ui-body ui-body-a">
+            	<h3 class="titulo oc">-</h3>
+  
+               <div class="ui-grid-a">   
+               					<div class="ui-block-a" style="width: 100%;">
+					 <label for="hora" style="display: block;padding: 8px;padding-bottom: 0px;">
+						 Tiempo Aprox. de llegada:
+						 </label>
+						<input type="text" readonly name="hora" id="hora" data-role="datebox" data-options='{"mode":"timebox", "useNewStyle":true, "overrideTimeFormat": 12}' />  
+					 </div>
+               </div>
+                <div class="ui-grid-a">                	
+					<div class="ui-block-a">
+						<input id="btnRuta" type="button" data-icon="alert" data-iconpos="top" value="EN RUTA <br> (hh:mm)" onClick="$('#estado').val(4); $('#guardarTracking').click();">
+					</div>			    
+					<div class="ui-block-b">
+						<input id="btnArribo" type="button" data-icon="alert" data-iconpos="top" value="ARRIBO <br> (hh:mm)" onClick="$('#estado').val(9); $('#guardarTracking').click();">
+					</div> 
+				</div>
+
+				<div class="ui-grid-a">    
+					<div class="ui-block-a" style="width: 100%;">
+						 <label for="motivo_arribo" style="display: block;padding: 8px;padding-bottom: 0px;">
+						Motivo de Incumplimiento de Cita:
+						 </label>
+						<select name="motivo_arribo" id="motivo_arribo" data-native-menu="false"></select>
+					</div>
+				</div>				
+				
+				<div class="ui-grid-a">   	
+					<div class="ui-block-a">
+						<input id="btnDescarga1" type="button" data-icon="alert" data-iconpos="top" value="INICIO DESCARGA <br> (hh:mm)" onClick="setHoraActual('#hora_inicio'); $('#estado').val(11); $('#guardarTracking').click();">
+					</div>
+					<div class="ui-block-b">
+						<input id="btnDescarga2" type="button" data-icon="alert" data-iconpos="top" value="FIN DESCARGA <br> (hh:mm)" onClick="setHoraActual('#hora_fin'); $('#estado').val(11); $('#guardarTracking').click();">
+					</div>
+				</div>		
+				
+									
+					<div class="ui-grid-a">    
+					<div class="ui-block-a" style="width: 100%;">
+						 <label for="motivo_descarga" style="display: block;padding: 8px;padding-bottom: 0px;">
+						Motivo demora en descarga:
+						 </label>
+						<select name="motivo_descarga" id="motivo_descarga" data-native-menu="false"></select>
+					</div>
+					
+					<div class="ui-block-a">
+						<input id="btnEntregado" type="button" data-icon="alert" data-iconpos="top" value="ENTREGADO <br> (hh:mm)" onClick="setControl(6);">
+					</div>
+					<div class="ui-block-b">
+						<input id="btnNoEntregado" type="button" data-icon="alert" data-iconpos="top" value="NO ENTREGADO <br> (hh:mm)"
+						onClick="setControl(5);">
+					</div>
+					<div class="ui-block-a">
+						<input id="btnParcial" type="button" data-icon="alert" data-iconpos="top" value="ENTREGA PARCIAL <br> (hh:mm)"
+						onClick="setControl(7);">
+					</div>
+					
+				</div>
+            
+             
+                
+                	 <div class="contentAtencion1" style="display:none;">
+                  <label for="hora">Inicio de Atenci&oacute;n:</label>
+				<input type="text" readonly name="hora_inicio" id="hora_inicio" data-role="datebox" data-options='{"mode":"timebox", "useNewStyle":true, "overrideTimeFormat": 12}' />    
+                 <label for="hora">Fin de Atenci&oacute;n:</label>   
+				<input type="text" readonly name="hora_fin" id="hora_fin" data-role="datebox" data-options='{"mode":"timebox", "useNewStyle":true, "overrideTimeFormat": 12}' />       
+                </div>                   
+                
+                <div id="DIVRecepcionado1" style="display:none">
+                <label for="recepcionado">Recepcionado:</label>
+                <select onChange="valirRecepcion(this)" name="recepcionado" id="recepcionado" data-role="slider">
+                    <option value="0">NO</option>
+                    <option value="1">SI</option>
+                </select>
+                </div>               
+               
+               	<div id="DIVEstado1" style="display:none">
+                <label for="estado">Estado:</label>
+                <select name="estado" onChange="HabilitarIncidencia(this)" id="estado" data-native-menu="false">
+                    <option selected value="1">Pendiente</option>
+                </select>
+                </div>
+                
+                  <a id="btnIncidencia1" style="display:none;" href="#myPopup" data-rel="popup" data-icon="plus" data-iconpos="top" class="ui-shadow ui-btn ui-corner-all"> Registrar Incidencia </a>
+                
+                <div id="DIVIncidencia" style="display:none">
+                <label for="incidencia">Motivo:</label>
+                <select name="incidencia" id="incidencia" data-native-menu="false">
+                </select>
+                </div>
+                
+                <div class="contentDatos" style="display:none;">
+                <h4>Información de recepción:</h4>
+                
+                <label for="nombre">Nombre/Razón Social:</label>
+                <input type="text" name="nombre" id="nombre" value=""  />
+                
+                 <label for="dni">DNI/RUC:</label>
+                <input type="number" name="dni" id="dni" maxlength="8" size="8" value="" pattern="[0-9]*"/>
+                </div>
+                
+                <div id="panelParcial">
+                <label for="detalle">Detalle de Pedidos:</label>
+                	<div id="panelOCs" data-role="collapsible-set" data-theme="a" data-content-theme="a">        
+    				</div>
+                </div>
+                
+                
+                
+                <label for="observacion">Observaci&oacute;n:</label>
+<textarea rows="2" name="observacion" id="observacion"></textarea>
+                <input type="hidden" value="0" id="IDTranking" name="IDTranking" />
+                <input type="hidden" value="0" id="IDPedido" name="IDPedido" />
+                
             </div>
            	
             <div id="one" class="ui-content ui-body ui-body-a">
@@ -165,71 +286,7 @@
                 
             </div>
             
-            <div id="two" class="ui-content ui-body ui-body-a">
-            	<h3 class="titulo oc">-</h3>
-                
             
-                <label for="hora">Tiempo Aprox. de llegada:</label>
-               
-                	<input type="text" readonly name="hora" id="hora" data-role="datebox" data-options='{"mode":"timebox", "useNewStyle":true, "overrideTimeFormat": 12}' />                
-                
-                	 <div class="contentAtencion" style="display:none;">
-                  <label for="hora">Inicio de Atenci&oacute;n:</label>
-				<input type="text" readonly name="hora_inicio" id="hora_inicio" data-role="datebox" data-options='{"mode":"timebox", "useNewStyle":true, "overrideTimeFormat": 12}' />    
-                 <label for="hora">Fin de Atenci&oacute;n:</label>   
-				<input type="text" readonly name="hora_fin" id="hora_fin" data-role="datebox" data-options='{"mode":"timebox", "useNewStyle":true, "overrideTimeFormat": 12}' />       
-                </div>    
-                    
-              
-                
-                
-                
-                <div id="DIVRecepcionado" style="display:none">
-                <label for="recepcionado">Recepcionado:</label>
-                <select onChange="valirRecepcion(this)" name="recepcionado" id="recepcionado" data-role="slider">
-                    <option value="0">NO</option>
-                    <option value="1">SI</option>
-                </select>
-                </div>
-                
-                <div class="contentDatos" style="display:none;">
-                <h4>Información de recepción:</h4>
-                
-                <label for="nombre">Nombre/Razón Social:</label>
-                <input type="text" name="nombre" id="nombre" value=""  />
-                
-                 <label for="dni">DNI/RUC:</label>
-                <input type="number" name="dni" id="dni" maxlength="8" size="8" value="" pattern="[0-9]*"/>
-                </div>
-               
-               
-               	<div id="DIVEstado" style="display:none">
-                <label for="estado">Estado:</label>
-                <select name="estado" onChange="HabilitarIncidencia(this)" id="estado" data-native-menu="false">
-                    <option selected value="1">Pendiente</option>
-                </select>
-                </div>
-                
-                  <a id="btnIncidencia" style="display:none;" href="#myPopup"  data-rel="popup" data-position-to="window" data-icon="plus" data-inline="true" data-corners="true" data-shadow="true"   data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-icon-left ui-icon-plus"> Regsitrar Incidencia </a>
-                
-                <div id="DIVIncidencia" style="display:none">
-                <label for="incidencia">Motivo:</label>
-                <select name="incidencia" id="incidencia" data-native-menu="false">
-                </select>
-                </div>
-                
-                <div id="panelParcial">
-                <label for="detalle">Detalle de Pedidos:</label>
-                	<div id="panelOCs" data-role="collapsible-set" data-theme="a" data-content-theme="a">        
-    				</div>
-                </div>
-                
-                <label for="observacion">Observaci&oacute;n:</label>
-<textarea rows="2" name="observacion" id="observacion"></textarea>
-                <input type="hidden" value="0" id="IDTranking" name="IDTranking" />
-                <input type="hidden" value="0" id="IDPedido" name="IDPedido" />
-                
-            </div>
             
               <div id="trhee" class="ui-content ui-body ui-body-a" style="min-height:230px;">
               	 
@@ -328,7 +385,7 @@
 	<div data-role="footer">
 		<div data-role="navbar" data-iconpos="top">
 		<ul>
-			<li><a id="guardarTracking" data-icon="check">Guardar</a></li>
+			<li><a id="guardarTracking" data-icon="check">Confirmar</a></li>
 			<li><a id="regresarPanel" data-ajax="false" href="panel.html?idChofer=-1" data-icon="back">Regresar</a></li>			 
 		</ul>
 	</div><!-- /navbar -->

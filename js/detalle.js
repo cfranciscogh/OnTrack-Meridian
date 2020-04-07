@@ -327,7 +327,6 @@ $(document).ready(function(e) {
 			
 			
 		if ( $("#hora").val() == "" ){
-			//alert("Ingrese Tiempo Aprox. de llegada");
 			alerta("Ingrese Tiempo Aprox. de llegada");
 			$("#hora").focus();
 			return;
@@ -386,12 +385,15 @@ $(document).ready(function(e) {
 	parametros.Observacion = $("#observacion").val();	
 	parametros.Latitud = latitude;	
 	parametros.Longitud = longitude;	
-	parametros.Incidencia = $("#incidencia").val();	 
+	parametros.Incidencia = ( parametros.IDEstado == 9 ? $("#motivo_arribo").val() : ( parametros.IDEstado == 11 ?  $("#motivo_descarga").val() : $("#incidencia").val() ) );	 
 	parametros.FlagMail = 1;
+	//parametros.Incidencia3 = $("#demora").val();
+	//parametros.Incidencia2 = $("#demora").val();
+	//parametros.HoraLlegada = $("#hora_inicio").val();
 	parametros.HoraInicio = $("#hora_inicio").val();	 
 	parametros.HoraFin = $("#hora_fin").val();	
 	parametros.ParcialGrupo = 0;	 
-	//console.log(parametros);
+	console.log(parametros);
 	//return;
 		
 	$.mobile.loading('show'); 
@@ -525,7 +527,9 @@ $(document).ready(function(e) {
 		}	
 	else {
 		$.ajax({
-		   url : dominio + "TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTrakingV3",
+		   //url : dominio + "TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTraking_App",
+			//url : dominio + "/TransportesMeridan/Servicios/OnTrack/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTraking_App",
+			url : "http://localhost:34927/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTraking_App",
 			type: "POST",
 			dataType : "json",
 			data : JSON.stringify(parametros),
@@ -546,6 +550,7 @@ $(document).ready(function(e) {
 							paramDetalle.Cantidad = ( paramDetalle.IDEstado == 5 ? 0 : cantidadReal);	
 							$.ajax({
 								url : dominio + "/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/TrackinkDetalle",
+								//http://localhost:34927/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx
 								type: "POST",
 								dataType : "json",
 								data : JSON.stringify(paramDetalle),
@@ -567,6 +572,7 @@ $(document).ready(function(e) {
 			},	
 			error : function(jqxhr) 
 			{
+				console.log(jqxhr);
 			  alerta('Error de conexi\u00f3n, contactese con sistemas!');
 			}	
 		});		
@@ -599,7 +605,8 @@ function HabilitarIncidencia(control){
  } 
  
  setIncidencias_Tracking($.QueryString["empresa"],$(control).val());
- 
+ setIncidencias_Tracking2("TM",9,"#motivo_arribo");
+ setIncidencias_Tracking2("TM",11,"#motivo_descarga");
 
 }
 
@@ -618,11 +625,15 @@ function setTracking(idPedido){
         success : function(data, textStatus, jqXHR) {
 			//console.log(data.d);
 			resultado = $.parseJSON(data.d);
+			console.log(resultado);
 			$.mobile.loading('hide');
 			 
 			if ( resultado.length > 0 ){
 				
-				for (var i = 0; i<resultado.length;i++){					
+				for (var i = 0; i<resultado.length;i++){	
+					
+					
+					
 					//$(".titulo").val(resultado[i].IDTraking);
 					$("#IDTranking").val(resultado[i].IDTraking);
 					$("#IDPedido").val(resultado[i].IDPedido);
@@ -635,10 +646,31 @@ function setTracking(idPedido){
 						$("#dni").val(resultado[i].DNI.trim());
 					}
 					HabilitarIncidencia($("#estado"));
+					
+					 
+					
 					$("#estado").html("");
 					$("#estado").append("<option selected value='"+resultado[i].IDEstado+"'>"+resultado[i].Estado+"</option>");
-					if ( resultado[i].IDEstado == 4 ) {
-						$("#btnIncidencia").fadeIn("fast");					 
+					
+					if ( resultado[i].IDEstado == 3 ) {
+						$("#btnIncidencia").fadeIn("fast");	
+						$("#estado").append("<option value='4'>EN RUTA</option>"); 
+						$("#estado").append("<option value='5'>NO ENTREGADO</option>");
+					}
+					
+					if ( resultado[i].IDEstado == 4 ) { 
+						$("#estado").append("<option value='9'>ARRIBO</option>"); 
+						$("#estado").append("<option value='5'>NO ENTREGADO</option>");
+					}
+					
+					if ( resultado[i].IDEstado == 9 ) { 
+						$("#estado").append("<option value='11'>DESCARGANDO</option>"); 
+						$("#estado").append("<option value='5'>NO ENTREGADO</option>");
+					}
+					
+					if ( resultado[i].IDEstado == 11 ) {
+						$("#btnIncidencia").fadeIn("fast");	
+						$("#estado").append("<option value='6'>ENTREGADO</option>");
 						$("#estado").append("<option value='5'>NO ENTREGADO</option>");
 						$("#estado").append("<option value='7'>ENTREGA PARCIAL</option>");
 					}
@@ -650,8 +682,52 @@ function setTracking(idPedido){
 						$(".contentAtencion").fadeIn("fast");
 						$("#hora").val(resultado[i].TiempoAproxLlegadaFormat);
 						$("#hora_inicio").val(resultado[i].Hora_Inicio);
-						$("#hora_fin").val(resultado[i].Hora_Termino);
+						$("#hora_fin").val(resultado[i].Hora_Termino);						
+							
+						/*
+						//$("#btnRuta").val("EN RUTA - " + resultado[i].TiempoAproxLlegadaFormat);
+						$("#btnRuta").attr("data-icon","check");
+						//$("#btnRuta").button('refresh');
+						$("#btnRuta").parent().addClass("ui-icon-check");	
+						var html = $("#btnRuta").parent().html();
+						html = html.replace("hh:mm",resultado[i].TiempoAproxLlegadaFormat);
+						alert(html);
+						//$("#btnRuta").parent().html(html);
+						//$("#btnRuta").button('refresh');
+						*/
 					}
+					
+					if ( resultado[i].Orden > 4 ){
+						$("#btnRuta").parent().addClass("ui-icon-check");	
+					}
+					if ( resultado[i].Orden > 5 ){
+						$("#btnArribo").parent().addClass("ui-icon-check");	
+					}
+					if ( resultado[i].Orden > 6 ){
+						if(resultado[i].Hora_Inicio != "")
+							$("#btnDescarga1").parent().addClass("ui-icon-check");	
+						if(resultado[i].Hora_Termino != "")
+							$("#btnDescarga2").parent().addClass("ui-icon-check");	
+					}
+					if ( resultado[i].Orden > 7 ){
+						$("#btnEntregado").parent().addClass("ui-icon-check");	
+						$("#btnEntregado").parent().show();
+						$("#btnNoEntregado").parent().hide();
+						$("#btnParcial").parent().hide();					
+					}
+					if ( resultado[i].Orden > 8 ){
+						$("#btnParcial").parent().addClass("ui-icon-check");	
+						$("#btnParcial").parent().show();
+						$("#btnNoEntregado").parent().hide();
+						$("#btnEntregado").parent().hide();	
+					}
+					if ( resultado[i].Orden > 9 ){
+						$("#btnNoEntregado").parent().addClass("ui-icon-check");
+						$("#btnNoEntregado").parent().show();
+						$("#btnParcial").parent().hide();
+						$("#btnEntregado").parent().hide();	
+					}
+					 
 					
 					$("#estado").selectmenu( "refresh" )		
 					break;
@@ -707,6 +783,40 @@ function setIncidencias_Tracking(empresa, idestado){
 	
 }
 
+function setIncidencias_Tracking2(empresa, idestado, control){
+		
+	$("#incidencia").html("<option value='0'>Seleccionar Incidencia</option>");
+	//$.mobile.loading('show'); 
+	$.ajax({
+        url : "http://www.meridian.com.pe/ServiciosWEB/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/Obtener_IncidenciaPorEstado",
+        type: "POST",
+		cache: false,
+		//crossDomain: true,
+        dataType : "json",
+        data : '{"Empresa":"'+empresa+'", "IDEstado" : '+idestado+'}',
+		contentType: "application/json; charset=utf-8",
+        success : function(data, textStatus, jqXHR) {
+			//console.log(data.d);
+			resultado = $.parseJSON(data.d);
+			$.mobile.loading('hide');			 
+			if ( resultado.length > 0 ){				
+				for (var i = 0; i<resultado.length;i++){					
+					$(control).append("<option value='"+resultado[i].IDIncidencia+"'>"+resultado[i].Descripcion+"</option>");					
+				}
+				$(control).selectmenu('refresh', true);
+			}
+			else{
+			}
+        },
+
+        error : function(jqxhr) 
+        {	
+          alerta('Error de conexi\u00f3n, contactese con sistemas!');
+        }
+
+    });		 
+	
+}
 
 
 function valirRecepcion(ctrlSelect){
@@ -1001,4 +1111,28 @@ function alerta(mensaje){
 }
 
 function alertDismissed(){
+}
+
+function setHoraActual(control){
+	
+	var d = new Date();
+	var hora = d.getHours() + ":" + d.getMinutes();
+ 	$(control).val(hora);
+	
+}
+
+function setControl(estado){
+	$('#estado').val(estado);
+	$('#estado').selectmenu('refresh', true);
+	HabilitarIncidencia($('#estado'));
+	
+	$('.contentDatos').hide();
+	$('#DIVIncidencia').hide();
+	$('#panelParcial').hide();
+	if (estado == 6)
+		$('.contentDatos').show();
+	if (estado == 5 || estado == 7)
+		$('#DIVIncidencia').show();
+	if (estado == 7)
+		$('#panelParcial').show();
 }

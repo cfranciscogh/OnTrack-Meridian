@@ -83,7 +83,7 @@ function getProgramaciones(){
 						
 						
 				 	var href = "";
-					if (  resultado[i].IDEstado == 2  || resultado[i].IDEstado == 3  || resultado[i].IDEstado == 4 )
+					if (  resultado[i].IDEstado == 2  || resultado[i].IDEstado == 3  || resultado[i].IDEstado == 4 || resultado[i].IDEstado == 9 || resultado[i].IDEstado == 11 )
 						href = 'href="detalle.html?IDPedido='+resultado[i].IDPedido+'&idChofer='+$.QueryString["idChofer"]+'&empresa='+$.QueryString["empresa"] +  paramGrupo + '"'; 
 					
 					strStyle +="<style> #item" + resultado[i].IDPedido + ".ui-btn-icon-right:after{ background-color: " + resultado[i].Estado_Color + " !important;}</style>"
