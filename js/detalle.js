@@ -16,16 +16,11 @@ function onError(error) {
 function miubicacion() {
     alerta("Geolocalizaci\u00F3n: " + latitude + " | " + longitude);
 }
-// onError Callback receives a PositionError object
-//
- 
 function quitarFoto(IDFoto, ctr){
 	if ( confirm('Desea quitar esta foto?')){
 		$(ctr).parent().parent().remove();
 	}
 }
-
-
 function base64toBlob(base64Data, contentType) {
     contentType = contentType || 'image/jpeg';
     var sliceSize = 1024;
@@ -46,7 +41,6 @@ function base64toBlob(base64Data, contentType) {
     }
     return new Blob(byteArrays, { type: contentType });
 }
-
 function b64toBlob(b64Data, contentType, sliceSize) {
     contentType = contentType || '';
     sliceSize = sliceSize || 512;
@@ -72,9 +66,8 @@ function b64toBlob(b64Data, contentType, sliceSize) {
 }
 
 function sendImage(src) {
-	alerta("Inicia camara");
     src = (src == 'library') ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA;
-    navigator.camera.getPicture(success, fail, { 
+    navigator.camera.getPicture(CamaraSuccess, CamaraFail, { 
         quality: 70,
         destinationType: navigator.camera.DestinationType.DATA_URL,
         sourceType: src,
@@ -83,7 +76,7 @@ function sendImage(src) {
     });
 }
  
-function success(imageData) {
+function CamaraSuccess(imageData) {
     $.mobile.loading('show');
     if (window.FormData !== undefined) {
         var data = new FormData();
@@ -141,7 +134,7 @@ function success(imageData) {
     });
     */
 }
-function fail(message) {
+function CamaraFail(message) {
     alert(message);
 }
 
@@ -151,8 +144,8 @@ var watchID = null;
 $(document).ready(function(e) {
 	
 	
- $('#btnFoto').click(function (e) { e.preventDefault(); sendImage("camera"); });
-    
+ //$('#btnFoto').click(function (e) { e.preventDefault(); sendImage("camera"); });
+ $('#btnFoto').click(function () { sendImage("camera"); });   
  
  $('#fileFoto').on('change', function (e) {
 	 $.mobile.loading('show'); 
