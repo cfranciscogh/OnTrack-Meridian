@@ -1,5 +1,6 @@
-// JavaScript Document
+var servicio_url = "http://www.meridian.com.pe/TransportesMeridan/Servicios/App";
 var check = true;
+var dominio = "http://www.meridian.com.pe/ServiciosWEB/"; 
 var dominio = "http://www.meridian.com.pe/ServiciosWEB/"; 
 var dominio_extranet = "http://www.meridian.com.pe/GT_Extranet/";
 //var dominio = "http://localhost:34927/";
@@ -143,11 +144,9 @@ var watchID = null;
 
 $(document).ready(function(e) {
 	
-	
- //$('#btnFoto').click(function (e) { e.preventDefault(); sendImage("camera"); });
- $('#btnFoto').click(function () { sendImage("camera"); });   
+ 	$('#btnFoto').click(function () { sendImage("camera"); });   
  
- $('#fileFoto').on('change', function (e) {
+ 	$('#fileFoto').on('change', function (e) {
 	 $.mobile.loading('show'); 
     var files = e.target.files;
     //var myID = 3; //uncomment this to make sure the ajax URL works
@@ -195,7 +194,7 @@ $(document).ready(function(e) {
      }
 });
  
- $("#registrarIncidencia").click(function(e) {
+ 	$("#registrarIncidencia").click(function(e) {
         e.preventDefault();
 		
 		if ( latitude == "" ||  longitude == ""){
@@ -254,7 +253,7 @@ $(document).ready(function(e) {
 		
 	$.mobile.loading('show'); 
 	$.ajax({
-        url : dominio + "TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTrakingV2",
+		url : servicio_url + "/Distribucion/Entregas.asmx/GenerarTrakingV2",
         type: "POST",
 		//crossDomain: true,
         dataType : "json",
@@ -288,9 +287,7 @@ $(document).ready(function(e) {
 		
     });
 	
-	
-	
-	$("input[id*='opcion']").change(function(e) {	 
+ 	$("input[id*='opcion']").change(function(e) {	 
 		//console.log($("label[for*='" + $(this).attr("id") + "']").find("img").attr("title") );
         $("#txtIncidencia").html( $("label[for*='" + $(this).attr("id") + "']").find("img").attr("title") );
     });
@@ -302,23 +299,15 @@ $(document).ready(function(e) {
 	$("#regresarPanel").attr("href","panel.html?idChofer=" + $.QueryString["idChofer"] + "&empresa=" + $.QueryString["empresa"]);
 	
 	//$("#tituloEmpresa").html($.QueryString["empresa"]);
-	
- 
-	
-	
-	
 	watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
-	 
-	
+		
 	$("#guardarTracking").click(function(e) {
         e.preventDefault();
 		
 		if ( latitude == "" ||  longitude == ""){
-			//alert("Ingrese DNI");
 			//alerta("No se puede obtener información de ubicación, revise si su GPS se encuentra activo o tenga cobertura de red");
 			//return;
-		}
-			
+		}			
 			
 		if ( $("#hora").val() == "" ){
 			alerta("Ingrese Tiempo Aprox. de llegada");
@@ -521,9 +510,7 @@ $(document).ready(function(e) {
 		}	
 	else {
 		$.ajax({
-		   //url : dominio + "TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTraking_App",
-			//url : dominio + "/TransportesMeridan/Servicios/OnTrack/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTraking_App",
-			url : "http://localhost:34927/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTraking_App",
+			url : servicio_url + "/Distribucion/Entregas.asmx/GenerarTraking_App",
 			type: "POST",
 			dataType : "json",
 			data : JSON.stringify(parametros),
@@ -543,8 +530,7 @@ $(document).ready(function(e) {
 							cantidadReal = $(this).parent().parent().parent().find("input[type='number']").attr("max");
 							paramDetalle.Cantidad = ( paramDetalle.IDEstado == 5 ? 0 : cantidadReal);	
 							$.ajax({
-								url : dominio + "/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/TrackinkDetalle",
-								//http://localhost:34927/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx
+								url : servicio_url + "/Distribucion/Entregas.asmx/TrackinkDetalle",
 								type: "POST",
 								dataType : "json",
 								data : JSON.stringify(paramDetalle),
@@ -575,12 +561,9 @@ $(document).ready(function(e) {
 		
     });
 	
-//};
 	setHoraActual("#hora");
 
 });
-
-
 
 function HabilitarIncidencia(control){
  $(" #btnIncidencia").hide();
@@ -605,12 +588,11 @@ function HabilitarIncidencia(control){
 
 }
 
-
 function setTracking(idPedido){
 	
 	$.mobile.loading('show'); 
 	$.ajax({
-        url : "http://www.meridian.com.pe/ServiciosWEB/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/ObtenerTraking",
+		url : servicio_url + "/Distribucion/Entregas.asmx/ObtenerTraking",
         type: "POST",
 		cache: false,
 		//crossDomain: true,
@@ -625,9 +607,7 @@ function setTracking(idPedido){
 			 
 			if ( resultado.length > 0 ){
 				
-				for (var i = 0; i<resultado.length;i++){	
-					
-					
+				for (var i = 0; i<resultado.length;i++){					
 					
 					//$(".titulo").val(resultado[i].IDTraking);
 					$("#IDTranking").val(resultado[i].IDTraking);
@@ -693,31 +673,31 @@ function setTracking(idPedido){
 					}
 					
 					if ( resultado[i].Orden > 4 ){
-						$("#btnRuta").parent().addClass("ui-icon-check");	
+						$("#btnRuta").parent().addClass("ui-icon-check btnActive");	
 					}
 					if ( resultado[i].Orden > 5 ){
-						$("#btnArribo").parent().addClass("ui-icon-check");	
+						$("#btnArribo").parent().addClass("ui-icon-check btnActive");	
 					}
 					if ( resultado[i].Orden > 6 ){
 						if(resultado[i].Hora_Inicio != "")
-							$("#btnDescarga1").parent().addClass("ui-icon-check");	
+							$("#btnDescarga1").parent().addClass("ui-icon-check btnActive");	
 						if(resultado[i].Hora_Termino != "")
-							$("#btnDescarga2").parent().addClass("ui-icon-check");	
+							$("#btnDescarga2").parent().addClass("ui-icon-check btnActive");	
 					}
 					if ( resultado[i].Orden > 7 ){
-						$("#btnEntregado").parent().addClass("ui-icon-check");	
+						$("#btnEntregado").parent().addClass("ui-icon-check btnActive");	
 						$("#btnEntregado").parent().show();
 						$("#btnNoEntregado").parent().hide();
 						$("#btnParcial").parent().hide();					
 					}
 					if ( resultado[i].Orden > 8 ){
-						$("#btnParcial").parent().addClass("ui-icon-check");	
+						$("#btnParcial").parent().addClass("ui-icon-check btnActive");	
 						$("#btnParcial").parent().show();
 						$("#btnNoEntregado").parent().hide();
 						$("#btnEntregado").parent().hide();	
 					}
 					if ( resultado[i].Orden > 9 ){
-						$("#btnNoEntregado").parent().addClass("ui-icon-check");
+						$("#btnNoEntregado").parent().addClass("ui-icon-check btnActive");
 						$("#btnNoEntregado").parent().show();
 						$("#btnParcial").parent().hide();
 						$("#btnEntregado").parent().hide();	
@@ -741,14 +721,12 @@ function setTracking(idPedido){
 	
 }
 
-
-
 function setIncidencias_Tracking(empresa, idestado){
 		
 	$("#incidencia").html("<option value='0'>Seleccionar Incidencia</option>");
 	//$.mobile.loading('show'); 
 	$.ajax({
-        url : "http://www.meridian.com.pe/ServiciosWEB/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/Obtener_IncidenciaPorEstado",
+		url : servicio_url + "/Distribucion/Entregas.asmx/Obtener_IncidenciaPorEstado",
         type: "POST",
 		cache: false,
 		//crossDomain: true,
@@ -784,7 +762,7 @@ function setIncidencias_Tracking2(empresa, idestado, control){
 	$(control).html("");
 	//$.mobile.loading('show'); 
 	$.ajax({
-        url : "http://www.meridian.com.pe/ServiciosWEB/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/Obtener_IncidenciaPorEstado",
+		url : servicio_url + "/Distribucion/Entregas.asmx/Obtener_IncidenciaPorEstado",
         type: "POST",
 		cache: false,
 		//crossDomain: true,
@@ -814,7 +792,6 @@ function setIncidencias_Tracking2(empresa, idestado, control){
 	
 }
 
-
 function valirRecepcion(ctrlSelect){
 $("#btnIncidencia").show();
 $("#estado").val(4);
@@ -825,15 +802,13 @@ $("#estado").selectmenu( "refresh" );
 		$(".contentDatos").slideDown("fast");
 }
 
-function alertDismissed(){
-}
-//
+function alertDismissed(){}
 
 function setPedido(idPedido){
 	
 	$.mobile.loading('show'); 
 	$.ajax({
-        url : "http://www.meridian.com.pe/ServiciosWEB/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/ObtenerPedido",
+		url : servicio_url + "/Distribucion/Entregas.asmx/ObtenerPedido",
         type: "POST",
 		//crossDomain: true,
         dataType : "json",
@@ -897,15 +872,11 @@ function setPedido(idPedido){
 	
 }
 
-
-
-
-
 function setDetallePedido(idPedido){
  
 	$.mobile.loading('show'); 
 	$.ajax({
-        url : "http://www.meridian.com.pe/ServiciosWEB/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/ObtenerDetallePedido",
+		url : servicio_url + "/Distribucion/Entregas.asmx/ObtenerDetallePedido",
         type: "POST",
 		//crossDomain: true,
         dataType : "json",
@@ -958,10 +929,9 @@ function setCheck(chk){
 
 function setDetallePedidoGrupo(grupo,chofer,entidad){
 
-	$.mobile.loading('show'); 
-	//
+	$.mobile.loading('show');
 	$.ajax({
-        url : "http://www.meridian.com.pe/ServiciosWEB/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/ConsultarPedidosGrupo",
+		url : servicio_url + "/Distribucion/Entregas.asmx/ConsultarPedidosGrupo",
         type: "POST",
 		//crossDomain: true,
         dataType : "json",
@@ -1004,21 +974,14 @@ function setDetallePedidoGrupo(grupo,chofer,entidad){
 		   alerta('Error de conexi\u00f3n, contactese con sistemas!');
         }
 
-    });	
-	
-	
-	
-	
-	
-	
-		 
+    });		 
 	
 }
 
 function setDetallePedidoTrackingGrupo(IDPedido,NroOrdenCompra){
 
 	$.ajax({
-		url : "http://www.meridian.com.pe/ServiciosWEB/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/ObtenerDetallePedido",
+		url : servicio_url + "/Distribucion/Entregas.asmx/ObtenerDetallePedido",
 		type: "POST",
 		//crossDomain: true,
 		dataType : "json",
@@ -1051,12 +1014,11 @@ function setDetallePedidoTrackingGrupo(IDPedido,NroOrdenCompra){
 
 }
 
-
 function setFotosPedido(idPedido){
 	
 	$.mobile.loading('show'); 
 	$.ajax({
-        url : "http://www.meridian.com.pe/ServiciosWEB/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/ConsultarFotos",
+		url : servicio_url + "/Distribucion/Entregas.asmx/ConsultarFotos",
         type: "POST",
 		//crossDomain: true,
         dataType : "json",

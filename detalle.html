@@ -115,6 +115,12 @@
 	.listview {
 		margin:0px !important;
 	}
+		  
+	.btnActive{
+		background-color: #38c !important;
+    	color: white !important;
+    	border-color: #38c !important;
+	}
 	</style>
 </head>
 
@@ -142,7 +148,7 @@
             </div>
             
             <div id="two" class="ui-content ui-body ui-body-a">
-            	<h3 class="titulo oc">-</h3>
+            	<h3 class="titulo oc" style="margin: 10px 0;">Cargando...</h3>
   
                <div class="ui-grid-a" style="display: none;">   
                					<div class="ui-block-a" style="width: 100%;">
@@ -157,16 +163,16 @@
 						<input id="btnRuta" type="button" data-icon="alert" data-iconpos="top" value="EN RUTA <br> (hh:mm)" onClick="$('#estado').val(4); $('#guardarTracking').click();">
 					</div>			    
 					<div class="ui-block-b">
-						<input id="btnArribo" type="button" data-icon="alert" data-iconpos="top" value="ARRIBO <br> (hh:mm)" onClick="$('#estado').val(9); $('#guardarTracking').click();">
+						<input id="btnArribo" type="button" data-icon="alert" data-iconpos="top" value="ARRIBO <br> (hh:mm)" onClick="$('#estado').val(9); $('#motivo_arribo' ).selectmenu('open');">
 					</div> 
 				</div>
 
-				<div class="ui-grid-a">    
+				<div class="ui-grid-a" style="display: none;">    
 					<div class="ui-block-a" style="width: 100%;">
 						 <label for="motivo_arribo" style="display: block;padding: 8px;padding-bottom: 0px;">
 						Motivo de Incumplimiento de Cita:
 						 </label>
-						<select name="motivo_arribo" id="motivo_arribo" data-native-menu="false"></select>
+						<select onClick="$('#estado').val(9); $('#motivo_arribo').selectmenu('close');" name="motivo_arribo" id="motivo_arribo" data-native-menu="false"></select>
 					</div>
 				</div>				
 				

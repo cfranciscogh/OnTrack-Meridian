@@ -1,4 +1,4 @@
-// JavaScript Document
+var servicio_url = "http://www.meridian.com.pe/TransportesMeridan/Servicios/App";
 var latitude = "";
 var longitude = "";
 function onSuccess(position) {
@@ -49,7 +49,7 @@ function getProgramaciones(){
 	$("#listProgramacion").html("");  
 	$("#listProgramacionDAD").html("");  
 	$.ajax({
-        url : "http://www.meridian.com.pe/ServiciosWEB/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/ConsultarPedidos",
+		url : servicio_url + "/Distribucion/Entregas.asmx/ConsultarPedidos",
         type: "POST",
 		//crossDomain: true,
         dataType : "json",

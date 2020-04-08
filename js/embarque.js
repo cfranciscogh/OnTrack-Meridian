@@ -1,5 +1,4 @@
-// JavaScript Document
-var dominio = "http://www.meridian.com.pe/ServiciosWEB/"; 
+var servicio_url = "http://www.meridian.com.pe/TransportesMeridan/Servicios/App";  
 var  latitude = "";
 var longitude = "";
 function onSuccess(position) {
@@ -41,7 +40,7 @@ $(document).ready(function(e) {
 		paramEmbarque.HoraFin = $("#hora_fin").val();		
 		$.mobile.loading('show');
 		$.ajax({
-			url : dominio + "TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/CerrarEmbarque",
+			url : servicio_url + "/Distribucion/Entregas.asmx/CerrarEmbarque",
 			type: "POST",
 			dataType : "json",
 			data : JSON.stringify(paramEmbarque),
@@ -69,9 +68,8 @@ $(document).ready(function(e) {
 
 function mostrarEmbarque(IDChofer,IDPlaca,IDEmpresa){
 
-	$.ajax({
-		url :dominio +  "TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/ConsultarEmbarque",
-		//url : "http://www.meridian.com.pe/ServiciosWEB/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/ConsultarEmbarque",
+	$.ajax({ 
+		url : servicio_url + "/Distribucion/Entregas.asmx/ConsultarEmbarque",
 		type: "POST",
 		crossDomain: true,
 		dataType : "json",

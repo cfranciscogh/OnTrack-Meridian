@@ -1,4 +1,4 @@
-// JavaScript Document
+var servicio_url = "http://www.meridian.com.pe/TransportesMeridan/Servicios/App";
 $(document).ready(function(e) {
 	
 	/*$("#listEmpresas li a").eq(0).attr("href","panel.html?idChofer="+$.QueryString["idChofer"]+"&empresa=SODIMA");
@@ -11,7 +11,7 @@ $(document).ready(function(e) {
 
 function mostrarEmpresas(IDChofer){
 	$.ajax({
-		url : "http://www.meridian.com.pe/ServiciosWEB/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/ConsultarEmpresas_PorChofer",
+		url : servicio_url + "/Distribucion/Entregas.asmx/ConsultarEmpresas_PorChofer",
 		type: "POST",
 		crossDomain: true,
 		dataType : "json",
