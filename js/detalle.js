@@ -72,6 +72,7 @@ function b64toBlob(b64Data, contentType, sliceSize) {
 }
 
 function sendImage(src) {
+	alerta("Inicia camara");
     src = (src == 'library') ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA;
     navigator.camera.getPicture(success, fail, { 
         quality: 70,
@@ -141,7 +142,7 @@ function success(imageData) {
     */
 }
 function fail(message) {
-    //alert(message);
+    alert(message);
 }
 
 //document.addEventListener("deviceready", onDeviceReady, false);
@@ -150,7 +151,7 @@ var watchID = null;
 $(document).ready(function(e) {
 	
 	
-  $('#btnFoto').click(function (e) { e.preventDefault(); sendImage("camera"); });
+ $('#btnFoto').click(function (e) { e.preventDefault(); sendImage("camera"); });
     
  
  $('#fileFoto').on('change', function (e) {
@@ -582,6 +583,7 @@ $(document).ready(function(e) {
     });
 	
 //};
+	setHoraActual("#hora");
 
 });
 
@@ -785,7 +787,8 @@ function setIncidencias_Tracking(empresa, idestado){
 
 function setIncidencias_Tracking2(empresa, idestado, control){
 		
-	$("#incidencia").html("<option value='0'>Seleccionar Incidencia</option>");
+	//$(control).html("<option value='0'>Seleccionar Incidencia</option>");
+	$(control).html("");
 	//$.mobile.loading('show'); 
 	$.ajax({
         url : "http://www.meridian.com.pe/ServiciosWEB/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/Obtener_IncidenciaPorEstado",
@@ -1113,12 +1116,10 @@ function alerta(mensaje){
 function alertDismissed(){
 }
 
-function setHoraActual(control){
-	
+function setHoraActual(control){	
 	var d = new Date();
 	var hora = d.getHours() + ":" + d.getMinutes();
- 	$(control).val(hora);
-	
+ 	$(control).val(hora);	
 }
 
 function setControl(estado){
