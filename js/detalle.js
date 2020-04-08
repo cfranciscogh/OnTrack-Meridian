@@ -676,15 +676,22 @@ function setTracking(idPedido){
 						$("#btnRuta").parent().addClass("ui-icon-check btnActive");	
 					}
 					if ( resultado[i].Orden > 5 ){
+						$("#btnRuta").attr("disabled","disabled");
 						$("#btnArribo").parent().addClass("ui-icon-check btnActive");	
 					}
 					if ( resultado[i].Orden > 6 ){
+						$("#btnArribo").attr("disabled","disabled");
 						if(resultado[i].Hora_Inicio != "")
 							$("#btnDescarga1").parent().addClass("ui-icon-check btnActive");	
-						if(resultado[i].Hora_Termino != "")
+						if(resultado[i].Hora_Termino != ""){
+							$("#btnDescarga1").attr("disabled","disabled");
 							$("#btnDescarga2").parent().addClass("ui-icon-check btnActive");	
+						}
 					}
 					if ( resultado[i].Orden > 7 ){
+						$("#btnDescarga1").attr("disabled","disabled");
+						$("#btnDescarga2").attr("disabled","disabled");
+						
 						$("#btnEntregado").parent().addClass("ui-icon-check btnActive");	
 						$("#btnEntregado").parent().show();
 						$("#btnNoEntregado").parent().hide();
@@ -758,8 +765,13 @@ function setIncidencias_Tracking(empresa, idestado){
 
 function setIncidencias_Tracking2(empresa, idestado, control){
 		
-	//$(control).html("<option value='0'>Seleccionar Incidencia</option>");
-	$(control).html("");
+	if (control == "#motivo_arribo")
+		$(control).html("<option value='0'>Motivo de Incumplimiento de Cita</option>");
+	else if (control == "#motivo_descarga")
+		$(control).html("<option value='0'>Motivo demora en descarga</option>");
+	else
+		$(control).html("");
+	
 	//$.mobile.loading('show'); 
 	$.ajax({
 		url : servicio_url + "/Distribucion/Entregas.asmx/Obtener_IncidenciaPorEstado",
@@ -821,7 +833,7 @@ function setPedido(idPedido){
 				
 				for (var i = 0; i<resultado.length;i++){
 					$(".oc").html(resultado[i].NroOrdenCompra);
-					$(".titulo").html(resultado[i].NroOrdenCompra);
+					$(".titulo").html(resultado[i].NroOrdenCompra + " / " + " Hora Cita: " + resultado[i].Hora_Cita);					
 		 		 	$(".cliente").html(resultado[i].NombreCliente);
 					$(".dni").html(resultado[i].DocumentoCliente);
 					$(".blt").html(resultado[i].BLT_FME);
@@ -1091,4 +1103,47 @@ function setControl(estado){
 		$('#DIVIncidencia').show();
 	if (estado == 7)
 		$('#panelParcial').show();
+}
+
+function ValidarEstado(IDEstado){
+	$('#estado').val(IDEstado); 
+	validarHora($.QueryString["IDPedido"],IDEstado);	 
+}
+
+function validarHora(IDPedido,IDEstado){
+	var tiempo = 0;
+	$.mobile.loading('show'); 
+	$.ajax({
+		url : servicio_url + "/Distribucion/Entregas.asmx/ValidarHora",
+        type: "POST",
+		//crossDomain: true,
+        dataType : "json",
+        data : '{"IDPedido":"'+IDPedido+'","IDEstado":"'+IDEstado+'"}',
+		contentType: "application/json; charset=utf-8",
+        success : function(data, textStatus, jqXHR) {
+		resultado = $.parseJSON(data.d);
+			$.mobile.loading('hide');
+			if ( resultado.length > 0 ){
+				tiempo = resultado[0].Tiempo;
+				if (tiempo > 0){
+					if (IDEstado == 9){
+						$('#motivo_arribo').selectmenu('open');
+					}
+					if (IDEstado == 11){
+						alerta("hola");
+						$('#motivo_descarga').selectmenu('open');	
+					}
+				}
+				else
+					$('#guardarTracking').click();
+			}
+        },
+        error : function(jqxhr) 
+        {
+		   //console.log(jqxhr);	
+          alerta('Error de conexi\u00f3n, contactese con sistemas!');
+        }
+
+    });		 
+	return tiempo;
 }

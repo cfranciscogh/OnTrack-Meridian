@@ -163,7 +163,7 @@
 						<input id="btnRuta" type="button" data-icon="alert" data-iconpos="top" value="EN RUTA <br> (hh:mm)" onClick="$('#estado').val(4); $('#guardarTracking').click();">
 					</div>			    
 					<div class="ui-block-b">
-						<input id="btnArribo" type="button" data-icon="alert" data-iconpos="top" value="ARRIBO <br> (hh:mm)" onClick="$('#estado').val(9); $('#motivo_arribo' ).selectmenu('open');">
+						<input id="btnArribo" type="button" data-icon="alert" data-iconpos="top" value="ARRIBO <br> (hh:mm)" onClick="ValidarEstado(9);">
 					</div> 
 				</div>
 
@@ -172,7 +172,7 @@
 						 <label for="motivo_arribo" style="display: block;padding: 8px;padding-bottom: 0px;">
 						Motivo de Incumplimiento de Cita:
 						 </label>
-						<select onClick="$('#estado').val(9); $('#motivo_arribo').selectmenu('close');" name="motivo_arribo" id="motivo_arribo" data-native-menu="false"></select>
+						<select onChange="$('#estado').val(9); $('#motivo_arribo').selectmenu('close'); $('#guardarTracking').click();" name="motivo_arribo" id="motivo_arribo" data-native-menu="false"></select>
 					</div>
 				</div>				
 				
@@ -181,19 +181,20 @@
 						<input id="btnDescarga1" type="button" data-icon="alert" data-iconpos="top" value="INICIO DESCARGA <br> (hh:mm)" onClick="setHoraActual('#hora_inicio'); $('#estado').val(11); $('#guardarTracking').click();">
 					</div>
 					<div class="ui-block-b">
-						<input id="btnDescarga2" type="button" data-icon="alert" data-iconpos="top" value="FIN DESCARGA <br> (hh:mm)" onClick="setHoraActual('#hora_fin'); $('#estado').val(11); $('#guardarTracking').click();">
+						<input id="btnDescarga2" type="button" data-icon="alert" data-iconpos="top" value="FIN DESCARGA <br> (hh:mm)" onClick="setHoraActual('#hora_fin'); ValidarEstado(11);">
 					</div>
 				</div>		
 				
 									
-					<div class="ui-grid-a">    
+				<div class="ui-grid-a" style="display: none;">    
 					<div class="ui-block-a" style="width: 100%;">
 						 <label for="motivo_descarga" style="display: block;padding: 8px;padding-bottom: 0px;">
 						Motivo demora en descarga:
 						 </label>
-						<select name="motivo_descarga" id="motivo_descarga" data-native-menu="false"></select>
+						<select name="motivo_descarga" id="motivo_descarga" onChange="$('#estado').val(11); $('#motivo_descarga').selectmenu('close'); $('#guardarTracking').click();" data-native-menu="false"></select>
 					</div>
-					
+				</div>
+				<div class="ui-grid-a"> 	
 					<div class="ui-block-a">
 						<input id="btnEntregado" type="button" data-icon="alert" data-iconpos="top" value="ENTREGADO <br> (hh:mm)" onClick="setControl(6);">
 					</div>
@@ -259,7 +260,7 @@
                 
                 
                 <label for="observacion">Observaci&oacute;n:</label>
-<textarea rows="2" name="observacion" id="observacion"></textarea>
+<textarea rows="3" name="observacion" id="observacion"></textarea>
                 <input type="hidden" value="0" id="IDTranking" name="IDTranking" />
                 <input type="hidden" value="0" id="IDPedido" name="IDPedido" />
                 
