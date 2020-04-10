@@ -1130,7 +1130,6 @@ function validarHora(IDPedido,IDEstado){
 						$('#motivo_arribo').selectmenu('open');
 					}
 					if (IDEstado == 11){
-						alerta("hola");
 						$('#motivo_descarga').selectmenu('open');	
 					}
 				}
