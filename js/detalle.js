@@ -2,7 +2,7 @@ var servicio_url = "http://www.meridian.com.pe/TransportesMeridan/Servicios/App"
 var check = true;
 var dominio = "http://www.meridian.com.pe/ServiciosWEB/"; 
 var dominio = "http://www.meridian.com.pe/ServiciosWEB/"; 
-var dominio_extranet = "http://www.meridian.com.pe/GT_Extranet/";
+var dominio_extranet = "http://www.meridian.com.pe/TransportesMeridan/Extranet/Public";
 //var dominio = "http://localhost:34927/";
 
 var  latitude = "";
@@ -69,7 +69,7 @@ function b64toBlob(b64Data, contentType, sliceSize) {
 function sendImage(src) {
     src = (src == 'library') ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA;
     navigator.camera.getPicture(CamaraSuccess, CamaraFail, { 
-        quality: 70,
+        quality: 60,
         destinationType: navigator.camera.DestinationType.DATA_URL,
         sourceType: src,
         encodingType: navigator.camera.EncodingType.JPEG,
@@ -87,8 +87,7 @@ function CamaraSuccess(imageData) {
         //alert(data);
         $.ajax({
             type: "POST",
-            //url: dominio_extranet + '/Public/Servicios/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val(),
-			  url: dominio_extranet + 'TransportesMeridian/Util/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val(),
+			  url: dominio_extranet + '/Servicios/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val(),
             contentType: false,
             processData: false,
             data: data,
