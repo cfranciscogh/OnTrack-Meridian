@@ -3,6 +3,7 @@ var check = true;
 var dominio = "http://www.meridian.com.pe/ServiciosWEB/"; 
 var dominio = "http://www.meridian.com.pe/ServiciosWEB/"; 
 var dominio_extranet = "http://www.meridian.com.pe/TransportesMeridan/Extranet/Public";
+var dominio_foto = "http://www.meridian.com.pe/TransportesMeridan/Extranet";
 //var dominio = "http://localhost:34927/";
 
 var  latitude = "";
@@ -1044,7 +1045,7 @@ function setFotosPedido(idPedido){
 			if ( resultado.length > 0 ){
 				html = "<table width='100%'><tr>";		
 				for (var i = 0; i<resultado.length;i++){
-					html += "<td style='vertical-align:top;' width='50%'><div class='imgPanel'><img src='"+ resultado[i].Ubicacion.replace("~","http://www.meridian.com.pe/GT_Extranet") + "' width='100%'/> <a onclick='quitarFoto("+ resultado[i].IDFoto + ", this)'>Borrar</a></div></td>";
+					html += "<td style='vertical-align:top;' width='50%'><div class='imgPanel'><img src='"+ resultado[i].Ubicacion.replace("~",dominio_foto) + "' width='100%'/> <a onclick='quitarFoto("+ resultado[i].IDFoto + ", this)'>Borrar</a></div></td>";
 					if ( (i%2)!=0 && i>0 )
 						html += "</tr><tr>"; 			 
 				}
