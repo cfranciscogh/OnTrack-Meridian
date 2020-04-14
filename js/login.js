@@ -1,4 +1,4 @@
-var servicio_url = "http://www.meridian.com.pe/TransportesMeridan/Servicios/App/";
+var servicio_url = "https://www.meridian.com.pe/TransportesMeridan/Servicios/App";
 $(document).ready(function(e) {
     	$("#ingresar").click(function(e) {
             e.preventDefault();
@@ -19,7 +19,7 @@ var loginValidar = function(){
 	$.ajax({
         url : servicio_url + "/Autenticacion/Login.asmx/LoginChofer",
         type: "POST",
-		crossDomain: true,
+		//crossDomain: true,
         dataType : "json",
         data : '{"usuario" : "' + $("#usuario").val() + '", "clave" : "' + $("#clave").val() + '"}',
         contentType: "application/json; charset=utf-8",

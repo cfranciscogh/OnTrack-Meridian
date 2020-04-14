@@ -1,9 +1,8 @@
-var servicio_url = "http://www.meridian.com.pe/TransportesMeridan/Servicios/App";
+var servicio_url = "https://www.meridian.com.pe/TransportesMeridan/Servicios/App";
+//var servicio_url = "http://localhost:34927";
 var check = true;
-var dominio = "http://www.meridian.com.pe/ServiciosWEB/"; 
-var dominio = "http://www.meridian.com.pe/ServiciosWEB/"; 
-var dominio_extranet = "http://www.meridian.com.pe/TransportesMeridan/Extranet/Public";
-var dominio_foto = "http://www.meridian.com.pe/TransportesMeridan/Extranet";
+var dominio_extranet = "https://www.meridian.com.pe/TransportesMeridan/Extranet/Public";
+var dominio_foto = "https://www.meridian.com.pe/TransportesMeridan/Extranet";
 //var dominio = "http://localhost:34927/";
 
 var  latitude = "";
@@ -402,7 +401,8 @@ $(document).ready(function(e) {
 			//}
 			//console.log(paramDetalle);
             $.ajax({
-				url : dominio + "/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/TrackinkDetalle",
+				//url : dominio + "/TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/TrackinkDetalle",
+				url : servicio_url + "/Distribucion/Entregas.asmx/TrackinkDetalle",
 				type: "POST",
 				dataType : "json",
 				data : JSON.stringify(paramDetalle),
@@ -439,7 +439,8 @@ $(document).ready(function(e) {
 					parametros.ParcialGrupo = 1;
 					
 				$.ajax({
-				   url : dominio + "TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTrakingGrupo",
+				   //url : dominio + "TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTrakingGrupo",
+					url : servicio_url + "/Distribucion/Entregas.asmx/GenerarTrakingGrupo",
 					type: "POST",
 					dataType : "json",
 					data : JSON.stringify(parametros),
@@ -461,7 +462,8 @@ $(document).ready(function(e) {
 			}
 			else{
 				$.ajax({
-				   url : dominio + "TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTrakingGrupo_Simple",
+				    //url : dominio + "TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTrakingGrupo_Simple",
+					url : servicio_url + "/Distribucion/Entregas.asmx/GenerarTrakingGrupo_Simple",
 					type: "POST",
 					dataType : "json",
 					data : JSON.stringify(parametros),
@@ -485,7 +487,8 @@ $(document).ready(function(e) {
 		else{ 
 		
 			$.ajax({
-			   url : dominio + "TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTrakingV3",
+			    //url : dominio + "TransportesMeridian/Sodimac/Pedido/WSPedido.asmx/GenerarTrakingV3",
+				url : servicio_url + "/Distribucion/Entregas.asmx/GenerarTrakingV3",
 				type: "POST",
 				dataType : "json",
 				data : JSON.stringify(parametros),
@@ -1129,8 +1132,7 @@ function validarHora(IDPedido,IDEstado){
 					if (IDEstado == 9){
 						$('#motivo_arribo').selectmenu('open');
 					}
-					if (IDEstado == 11){
-						alerta("hola");
+					if (IDEstado == 11){ 
 						$('#motivo_descarga').selectmenu('open');	
 					}
 				}

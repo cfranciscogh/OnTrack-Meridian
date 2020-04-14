@@ -1,4 +1,4 @@
-var servicio_url = "http://www.meridian.com.pe/TransportesMeridan/Servicios/App";
+var servicio_url = "https://www.meridian.com.pe/TransportesMeridan/Servicios/App";
 $(document).ready(function(e) {
 	
 	/*$("#listEmpresas li a").eq(0).attr("href","panel.html?idChofer="+$.QueryString["idChofer"]+"&empresa=SODIMA");

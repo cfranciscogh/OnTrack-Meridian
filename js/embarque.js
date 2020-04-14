@@ -1,4 +1,4 @@
-var servicio_url = "http://www.meridian.com.pe/TransportesMeridan/Servicios/App";  
+var servicio_url = "https://www.meridian.com.pe/TransportesMeridan/Servicios/App";  
 var  latitude = "";
 var longitude = "";
 function onSuccess(position) {
