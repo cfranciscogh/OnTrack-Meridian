@@ -1132,7 +1132,11 @@ function validarHora(IDPedido,IDEstado){
 					if (IDEstado == 9){
 						$('#motivo_arribo').selectmenu('open');
 					}
+<<<<<<< HEAD
 					if (IDEstado == 11){ 
+=======
+					if (IDEstado == 11){
+>>>>>>> 73fab724f2bd1341598e38a88e9214716703822c
 						$('#motivo_descarga').selectmenu('open');	
 					}
 				}
