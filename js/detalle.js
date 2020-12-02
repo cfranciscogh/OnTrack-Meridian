@@ -2,9 +2,10 @@ var servicio_url = "https://www.meridian.com.pe/TransportesMeridan/Servicios/App
 //var servicio_url = "http://localhost:34927";
 var check = true;
 var dominio_extranet = "https://www.meridian.com.pe/TransportesMeridan/Extranet/Public";
+//var dominio_extranet = "http://localhost:50691/Public";
 var dominio_foto = "https://www.meridian.com.pe/TransportesMeridan/Extranet";
 //var dominio = "http://localhost:34927/";
-
+var imageData64 = "";
 var  latitude = "";
 var longitude = "";
 function onSuccess(position) {
@@ -68,17 +69,20 @@ function b64toBlob(b64Data, contentType, sliceSize) {
 
 function sendImage(src) {
     src = (src == 'library') ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA;
-    navigator.camera.getPicture(CamaraSuccess, CamaraFail, { 
+    navigator.camera.getPicture(CamaraSuccess, CamaraFail, {
         quality: 60,
         destinationType: navigator.camera.DestinationType.DATA_URL,
         sourceType: src,
+        //targetWidth: 1240,
+        //targetHeight: 1754,
+        correctOrientation: true,
         encodingType: navigator.camera.EncodingType.JPEG,
         saveToPhotoAlbum: false
     });
 }
- 
+
 function CamaraSuccess(imageData) {
-    $.mobile.loading('show');
+    $.mobile.loading('show'); 
     if (window.FormData !== undefined) {
         var data = new FormData();
         data.append("IDPedido", $("#IDPedido").val());
@@ -87,7 +91,7 @@ function CamaraSuccess(imageData) {
         //alert(data);
         $.ajax({
             type: "POST",
-			  url: dominio_extranet + '/Servicios/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val(),
+            url: dominio_extranet + '/Servicios/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val(),
             contentType: false,
             processData: false,
             data: data,
@@ -101,22 +105,23 @@ function CamaraSuccess(imageData) {
                 else {
                     //alerta("Error, no se pudo subir la foto");
                     alerta(resp[1]);
-                    alerta(resp[2]);
+                    //alerta(resp[2]);
                 }
-                    
+
 
                 $.mobile.loading('hide');
-                $('#fileFoto').val("");
+                //$('#fileFoto').val("");
             },
             error: function (xhr, status, p3, p4) {
                 var err = "Error " + " " + status + " " + p3 + " " + p4;
                 if (xhr.responseText && xhr.responseText[0] == "{")
                     err = JSON.parse(xhr.responseText).Message;
 
-                $('#file').val("");
+                //$('#file').val("");
                 console.log(xhr);
                 console.log(status);
                 alerta("Error, no se pudo subir la foto");
+                alerta(err);
                 $.mobile.loading('hide');
             }
         });
@@ -134,8 +139,9 @@ function CamaraSuccess(imageData) {
     });
     */
 }
+
 function CamaraFail(message) {
-    alert(message);
+    //alert(message);
 }
 
 //document.addEventListener("deviceready", onDeviceReady, false);
@@ -144,54 +150,8 @@ var watchID = null;
 $(document).ready(function(e) {
 	
  	$('#btnFoto').click(function () { sendImage("camera"); });   
- 
- 	$('#fileFoto').on('change', function (e) {
-	 $.mobile.loading('show'); 
-    var files = e.target.files;
-    //var myID = 3; //uncomment this to make sure the ajax URL works
-    if (files.length > 0) {
-       if (window.FormData !== undefined) {
-           var data = new FormData();
-		   data.append("IDPedido", $("#IDPedido").val());
-           for (var x = 0; x < files.length; x++){
-               data.append("file" + x, files[x]);
-           }
-		  //console.log($("#IDPedido").val());
-           $.ajax({
-               type: "POST",
-               url: dominio_extranet + 'Public/Servicios/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val(),
-               contentType: false,
-               processData: false,
-               data: data,
-               success: function(result) {
-                   resp = result.toString().split("|");
-				   if ( resp[0] == 0) {
-				   		alerta(resp[1]);
-						setFotosPedido($.QueryString["IDPedido"]);
-				   }
-					else
-						alerta("Error, no se pudo subir la foto");
-						
-				   $.mobile.loading('hide'); 
-				   $('#file').val("");
-               },
-               error: function (xhr, status, p3, p4){
-                   var err = "Error " + " " + status + " " + p3 + " " + p4;
-                   if (xhr.responseText && xhr.responseText[0] == "{")
-                       err = JSON.parse(xhr.responseText).Message;
-                       
-					   $('#file').val("");
-					   //console.log(xhr);
-					    //console.log(status);
-					   alerta("Error, no se pudo subir la foto");
-					   $.mobile.loading('hide'); 
-                    }
-                });
-        } else {
-            alert("This browser doesn't support HTML5 file uploads!");
-          }
-     }
-});
+ 	$('#btnAlbum').click(function () { sendImage("library"); });
+ 	 
  
  	$("#registrarIncidencia").click(function(e) {
         e.preventDefault();
