@@ -159,7 +159,7 @@ $(document).ready(function(e) {
 		  //console.log($("#IDPedido").val());
            $.ajax({
                type: "POST",
-               url: dominio_extranet + 'TransportesMeridian/Util/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val(),
+               url: dominio_extranet + 'Public/Servicios/UploadImageTracking.ashx?IDPedido=' + $("#IDPedido").val(),
                contentType: false,
                processData: false,
                data: data,
