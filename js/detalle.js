@@ -141,7 +141,7 @@ function CamaraSuccess(imageData) {
 }
 
 function CamaraFail(message) {
-    //alert(message);
+    alert(message);
 }
 
 //document.addEventListener("deviceready", onDeviceReady, false);
